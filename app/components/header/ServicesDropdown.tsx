@@ -10,7 +10,7 @@ export default function ServicesDropdown() {
       <Navlink href="/services">
         Services
       </Navlink>
-        <div className="absolute left-0 top-full w-48 bg-white text-black dark:bg-gray-800 dark:text-white shadow-lg hidden group-hover:block">
+        <div className="absolute left-0 top-full z-50 w-52 bg-white text-black dark:bg-gray-800 dark:text-white shadow-lg hidden group-hover:block">
         <Link
           href="/services/tax"
           className={classNames}

@@ -13,6 +13,7 @@ export async function Footer() {
                 alt="MZPromt Logo"
                 width={160}
                 height={50}
+                loading="eager"
               />
             </Link>
           </div>
