@@ -1,12 +1,18 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-export type ServicesProps = {
+export type ServiceCardData = {
+    id:number;
     title:string;
+    slug:string;
     description:string;
-    icon?: React.ReactNode;
+    icon?: string| null;
+    imageUrl?: string| null;
+    isActive:boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 
-export default function Services({ services }: { services: ServicesProps[] }) {
+export default function Services({ services }: { services: ServiceCardData[] }) {
     return (
         <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
             <h1 className="text-4xl font-bold mb-8">Our Services</h1>
