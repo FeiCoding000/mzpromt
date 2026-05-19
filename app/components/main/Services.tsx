@@ -1,5 +1,6 @@
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
+import Link from "next/dist/client/link";
 export type ServiceCardData = {
   id: number;
   title: string;
@@ -41,7 +42,11 @@ export default function Services({
             )}
             <h3 className="text-xl mb-2">{service.title.toUpperCase()}</h3>
             <p>{service.description}</p>
-            <Button variant="link" className="px-0">Learn More →</Button>
+            <Button variant="link" className="px-0">
+                <Link href={`/services/${service.slug}`}>
+                  Learn More →
+                </Link>
+            </Button>
           </div>
         ))}
       </div>
