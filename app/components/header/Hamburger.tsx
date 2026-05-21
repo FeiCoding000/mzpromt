@@ -45,7 +45,7 @@ export default function Hamburger() {
 
       <SheetContent side="right">
         <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
+          <SheetTitle></SheetTitle>
           <SheetDescription className="sr-only">
             Mobile navigation menu
           </SheetDescription>
