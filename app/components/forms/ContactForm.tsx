@@ -89,7 +89,6 @@ export default function ContactForm() {
                 )}
               </Field>
 
-              <div className="flex flex-col md:flex-row md:justify-between gap-7">
                 <Field>
                   <FieldLabel htmlFor="organisation">Organisation</FieldLabel>
                   <Input
@@ -134,7 +133,6 @@ export default function ContactForm() {
                     </Field>
                   )}
                 />
-              </div>
 
               <Field>
                 <FieldLabel htmlFor="preferredTime">Preferred Time</FieldLabel>
