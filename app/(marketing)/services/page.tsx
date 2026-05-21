@@ -1,5 +1,9 @@
-export default function Page() {
+import Services from "@/app/components/main/Services"
+import { getAllServices } from "@/lib/queries/services";
+
+export default async function Page() {
+    const services = await getAllServices();
     return (
-             <div>Services page</div>
+             <Services services={services} />
     )
 }
