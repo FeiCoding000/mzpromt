@@ -23,9 +23,9 @@ const navLinks = [
 ];
 
 const serviceLinks = [
-  { href: "/services/tax", label: "Tax Services" },
-  { href: "/services/corporate", label: "Corporate Services" },
-  { href: "/services/bookkeeping", label: "Bookkeeping Services" },
+  { href: "/services/business", label: "Business Services" },
+  { href: "/services/entity", label: "Entity Setup Services" },
+  { href: "/services/tax", label: "Individual Tax Services" },
 ];
 
 const mobileLinkClass = "rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100";

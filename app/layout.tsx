@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header/Header";
 import { Footer } from "./components/footer/Footer";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
@@ -36,6 +37,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Toaster position="top-center" />
         </body>
     </html>
   );

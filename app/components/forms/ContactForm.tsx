@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 import { createClient } from "@/lib/queries/clients";
 import { contactDataSchema, type ContactData } from "@/lib/schemas/contactData";
 
@@ -44,12 +45,15 @@ export default function ContactForm() {
   ];
 
   async function onSubmit(data: ContactData) {
-    try {
-      await createClient(data);
-      form.reset();
-    } catch (error) {
-      console.error("Error creating client:", error);
+    const result = await createClient(data);
+
+    if (!result.ok) {
+      toast.error(result.error);
+      return;
     }
+
+    toast.success("Your enquiry has been submitted.");
+    form.reset();
   }
 
   return (

@@ -12,22 +12,22 @@ export default function ServicesDropdown() {
       </Navlink>
         <div className="absolute left-0 top-full z-50 w-52 bg-white text-black dark:bg-gray-800 dark:text-white shadow-lg hidden group-hover:block">
         <Link
+          href="/services/business"
+          className={classNames}
+        >
+          Business Services
+        </Link>
+        <Link
+          href="/services/entity"
+          className={classNames}
+        >
+          Entity Setup Services
+        </Link>
+        <Link
           href="/services/tax"
           className={classNames}
         >
-          Tax Services
-        </Link>
-        <Link
-          href="/services/corporate"
-          className={classNames}
-        >
-          Corporate Services
-        </Link>
-        <Link
-          href="/services/bookkeeping"
-          className={classNames}
-        >
-          Bookkeeping Services
+          Individual Tax Services
         </Link>
         </div> 
     </div>
