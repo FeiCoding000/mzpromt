@@ -10,7 +10,7 @@ export default async function Page() {
                 heroInfo={{
                     title: "Our Services",
                     description: "Explore the range of professional services we offer to support your business needs.",
-                    backgroundImageUrl: "hero.jpg"
+                    backgroundImageUrl: "tax.jpg"
                 }} 
             />
             <Services services={services} />

@@ -24,8 +24,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { createClient } from "@/lib/queries/clients";
 import { contactDataSchema, type ContactData } from "@/lib/schemas/contactData";
+import { useRouter } from "next/navigation";
 
 export default function ContactForm() {
+  const router = useRouter();
   const form = useForm<ContactData>({
     resolver: zodResolver(contactDataSchema),
     defaultValues: {
@@ -48,12 +50,13 @@ export default function ContactForm() {
     const result = await createClient(data);
 
     if (!result.ok) {
-      toast.error(result.error);
+      toast.error(result.message);
       return;
     }
 
     toast.success("Your enquiry has been submitted.");
     form.reset();
+    router.push("/");
   }
 
   return (

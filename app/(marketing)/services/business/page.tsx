@@ -4,7 +4,7 @@ export default function BusinessServicesPage() {
         {
             title: "Business Services",
             description: "We offer a wide range of business services to help you grow and succeed in today's competitive market.",
-            backgroundImageUrl: "hero.jpg",
+            backgroundImageUrl: "business.jpg",
         };
   return (
     <div>

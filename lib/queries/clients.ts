@@ -5,14 +5,13 @@ type CreateClientSuccess = {
   data: unknown;
 };
 
-type CreateClientError = {
+type CreateClientErrorMessage = {
   ok: false;
   status?: number;
-  error: string;
-  details?: unknown;
+  message: string;
 };
 
-export type CreateClientResult = CreateClientSuccess | CreateClientError;
+export type CreateClientResult = CreateClientSuccess | CreateClientErrorMessage;
 
 export async function createClient(
   data: ContactData
@@ -27,13 +26,13 @@ export async function createClient(
     });
 
     const responseData = await response.json();
+    console.log("API Response:", responseData);
 
     if (!response.ok) {
       return {
         ok: false,
         status: response.status,
-        error: responseData?.error ?? "Failed to create client",
-        details: responseData?.details,
+        message: responseData?.details?.message ?? "Failed to create client"
       };
     }
 
@@ -44,7 +43,7 @@ export async function createClient(
   } catch (error) {
     return {
       ok: false,
-      error: error instanceof Error ? error.message : "Network error",
+      message: error instanceof Error ? error.message : "Network error",
     };
   }
 }
