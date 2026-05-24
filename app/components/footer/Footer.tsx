@@ -18,33 +18,36 @@ export async function Footer() {
             </Link>
           </div>
           <Separator orientation="vertical" className="hidden md:block" />
-          <Separator orientation="horizontal" className="block md:hidden w-full" />
+          <Separator
+            orientation="horizontal"
+            className="block md:hidden w-full"
+          />
           <div className="flex flex-col items-start md:flex-row space-y-6 md:space-x-12 md:space-y-0">
             <div className="text-left flex-col items-start md:space-x-0">
               <p className="">Services</p>
               <div className="flex flex-col space-y-1 mt-1 text-left">
+                <Link
+                  href="/services/business"
+                  className="text-sm hover:underline"
+                >
+                  Business Service
+                </Link>
+                <Link
+                  href="/services/entity"
+                  className="text-sm hover:underline"
+                >
+                  Entity Setup Service
+                </Link>
                 <Link href="/services/tax" className="text-sm hover:underline">
-                  Tax Service
-                </Link>
-                <Link
-                  href="/services/corporate"
-                  className="text-sm hover:underline"
-                >
-                  Corporate Service
-                </Link>
-                <Link
-                  href="/services/bookkeeping"
-                  className="text-sm hover:underline"
-                >
-                  Bookkeeping Service
+                  Individual Tax Service
                 </Link>
               </div>
             </div>
             <div>
               <p className="text-left">Contact</p>
               <div className="flex flex-col space-y-1 mt-1 text-left">
-                <p className="text-sm">Email: info@mzpromt.com</p>
-                <p className="text-sm">Phone: (123) 456-7890</p>
+                <p className="text-sm">Email: muzi.huang@managementzone.com</p>
+                <p className="text-sm">Phone: (61) 0416388848</p>
                 <p className="text-sm">Address: 123 Main St, City, Country</p>
               </div>
             </div>
@@ -73,7 +76,9 @@ export async function Footer() {
             </div>
           </div>
         </div>
-        <p>&copy; {new Date().getFullYear()} MZPromt. All rights reserved.</p>
+        <p className="text-sm">
+          &copy; {new Date().getFullYear()} MZPromt. All rights reserved.
+        </p>
       </div>
     </footer>
   );

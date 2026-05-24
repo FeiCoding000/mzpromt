@@ -15,6 +15,13 @@
       "when": 1779011064574,
       "tag": "0001_narrow_champions",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779629271823,
+      "tag": "0002_fair_freak",
+      "breakpoints": true
     }
   ]
 }
