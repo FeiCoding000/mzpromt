@@ -22,7 +22,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { createClient } from "@/lib/queries/clients";
 import { contactDataSchema, type ContactData } from "@/lib/schemas/contactData";
 import { useRouter } from "next/navigation";
 
@@ -47,10 +46,18 @@ export default function ContactForm() {
   ];
 
   async function onSubmit(data: ContactData) {
-    const result = await createClient(data);
+    const result = await fetch("/api/client", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-    if (!result.ok) {
-      toast.error(result.message);
+    const resultData = await result.json();
+
+    if (!resultData.ok) {
+      toast.error(resultData.error);
       return;
     }
 
