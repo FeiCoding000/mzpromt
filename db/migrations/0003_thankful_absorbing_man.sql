@@ -1,0 +1,2 @@
+CREATE TYPE "public"."category" AS ENUM('Tax', 'Accounting', 'Business');--> statement-breakpoint
+ALTER TABLE "posts" ALTER COLUMN "category" SET DATA TYPE "public"."category" USING "category"::"public"."category";

@@ -8,15 +8,7 @@ import type { Post } from "@/db/schema";
 import { useState } from "react";
 
 export default function Page() {
-    const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<string>("All");
-    const insightsProps = {
-        title: "Insights",
-        description: "Stay updated with the latest news and insights from our team.",
-        backgroundImageUrl: "insights.jpg"
-    };
-
-    const mockedPosts: Post[] = [
+        const mockedPosts: Post[] = [
         {
             id: 1,
             title: "ATO New Tax Measures: Essential Updates for Australian Small Businesses",
@@ -60,8 +52,15 @@ export default function Page() {
             updatedAt: new Date(),
         },
     ];
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>(mockedPosts);
+    const [selectedCategory, setSelectedCategory] = useState<string>("All");
+    const insightsProps = {
+        title: "Insights",
+        description: "Stay updated with the latest news and insights from our team.",
+        backgroundImageUrl: "insights.jpg"
+    };
 
-    const categories = Array.from(new Set(mockedPosts.map(post => post.category))).concat("All").reverse();
+    const categories = Array.from(new Set(mockedPosts.map(post => post.category)));
     const featuredPost = mockedPosts.find(post => post.isFeatured);
 
     const onCategorySelect = (category: string) => {
@@ -84,7 +83,6 @@ export default function Page() {
                     <CatergoryFilter categories={categories} onCategorySelect={onCategorySelect} />
                     </div>
 
-                    
                     {featuredPost &&  selectedCategory === "All" && <div className="my-10 w-full"><FeaturedPost post={featuredPost} /> </div>}
 
                     <div className="my-10 grid gap-6 md:grid-cols-2">

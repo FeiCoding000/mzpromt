@@ -21,13 +21,19 @@ export const postStatusEnum = pgEnum("post_status", [
   "archived",
 ]);
 
+export const categoryEnum = pgEnum("category", [
+  "Tax",
+  "Accounting",
+  "Business",
+]);
+
 export const posts = pgTable("posts", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 200 }).notNull(),
   slug: varchar("slug", { length: 200 }).notNull().unique(),
   content: text("content").notNull(),
   excerpt: text("excerpt").notNull(),
-  category: varchar("category", { length: 100 }).notNull(),
+  category: categoryEnum("category").notNull(),
   coverImageUrl: text("cover_image_url"),
 
   status: postStatusEnum("status").default("draft").notNull(),

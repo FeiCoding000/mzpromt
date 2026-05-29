@@ -22,6 +22,13 @@
       "when": 1779629271823,
       "tag": "0002_fair_freak",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780034308621,
+      "tag": "0003_thankful_absorbing_man",
+      "breakpoints": true
     }
   ]
 }
