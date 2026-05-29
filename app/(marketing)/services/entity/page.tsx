@@ -1,3 +1,4 @@
+import ContactUs from "@/app/components/contact/ContactUs";
 import HeroComponent from "@/app/components/main/HeroComponent";
 export default function EntitySetupPage() {
   const entitySetupProps = {
@@ -10,6 +11,7 @@ export default function EntitySetupPage() {
     <>
       <div>
         <HeroComponent heroInfo={entitySetupProps} />
+        <ContactUs />
       </div>
     </>
   );

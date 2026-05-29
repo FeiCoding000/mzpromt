@@ -1,8 +1,27 @@
-export default function PostListItem() {
+import { InboxIcon, Calculator, CircleDollarSign, Handshake } from "lucide-react"
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
+import { Post } from "@/db/schema"
+export default function PostListItem( { post }: { post: Post }) {
+    const iconMap = {
+        "Tax": <CircleDollarSign />,
+        "Accounting": <Calculator />,
+        "Business": <Handshake />,
+    }
     return (
-        <div className="border rounded-lg p-4">
-            <h3 className="text-xl font-semibold mb-2">Post Title</h3>
-            <p className="text-gray-600">This is a brief description of the post. It gives an overview of the content.</p>
-        </div>
+        <Item>
+            <ItemMedia>
+                {iconMap[post.category]} 
+            </ItemMedia>
+            <ItemContent>
+                <ItemTitle>{post.title}</ItemTitle>
+                <ItemDescription>{post.excerpt}</ItemDescription>
+            </ItemContent>
+        </Item>
     )
 }

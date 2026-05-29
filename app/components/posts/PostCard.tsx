@@ -1,21 +1,39 @@
 import type { Post } from "@/db/schema";
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import Image from "next/image"
+
 export default function PostCard({ post }: { post: Post }) {
   return (
-    <div className="h-100 border hover:shadow-lg transition-shadow duration-300 flex flex-col bg-cover bg-center rounded-lg overflow-hidden">
-      <div
-        className="w-full h-1/2"
-        style={{
-          backgroundImage: `url('${post.coverImageUrl}')`
-        }}
-      ></div>
-      <div className="p-4 h-1/2">
-        <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-        <p className="text-sm text-gray-600">
-          Published on {post.publishedAt?.toLocaleDateString()}
-        </p>
-        <p className="text-gray-600">{post.excerpt}</p>
-        <p className="text-sm mt-2">Read more...</p>
-      </div>
-    </div>
+    <Card className="relative mx-auto w-full max-w-sm pt-0">
+      <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+      <Image
+        src={post.coverImageUrl?? "/default-image.jpg"}
+        alt="Event cover"
+        className="relative z-20 aspect-video w-full object-cover brightness-90 grayscale(10%) dark:brightness-80"
+        width={800}
+        height={400}
+      />
+      <CardHeader>
+        <CardAction>
+          <Badge variant="secondary">{post.category}</Badge>
+        </CardAction>
+        <CardTitle>{post.title}</CardTitle>
+        <CardDescription>
+          {post.excerpt}
+        </CardDescription>
+      </CardHeader>
+      <CardFooter>
+        <Button className="w-full">Read More</Button>
+      </CardFooter>
+    </Card>
   );
 }

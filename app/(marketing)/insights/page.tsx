@@ -1,3 +1,4 @@
+import ContactUs from "@/app/components/contact/ContactUs";
 import HeroComponent from "@/app/components/main/HeroComponent";
 import FeaturedPost from "@/app/components/posts/FeaturedPost";
 import PostCard from "@/app/components/posts/PostCard";
@@ -63,6 +64,7 @@ export default async function Page( { searchParams }: { searchParams: Promise<{ 
 
 
     const featuredPost = posts.find(post => post.isFeatured);
+    const recentPosts = posts.slice(0, 3);
 
     return (
         <div>
@@ -70,8 +72,7 @@ export default async function Page( { searchParams }: { searchParams: Promise<{ 
             <section className="container py-10 flex flex-col bg-emerald-50 lg:flex-row gap-10">
 
                 <main className="py-10 lg:w-3/4">
-
-                    <div className="mb-10 flex items-center gap-6"> 
+                    <div className="mb-10 flex items-center gap-4"> 
                         <Link href={"/insights"} className="text-sm font-medium ">
                             All
                         </Link>
@@ -84,7 +85,6 @@ export default async function Page( { searchParams }: { searchParams: Promise<{ 
                                 {link.name}
                             </Link>
                         ))}
-
                     </div>
 
                     {featuredPost && <div className="my-10 w-full"><FeaturedPost post={featuredPost} /> </div>}
@@ -96,14 +96,16 @@ export default async function Page( { searchParams }: { searchParams: Promise<{ 
                     </div>
 
                 </main>
-                <aside className="container lg:w-1/4">
-                    <h2 className="text-xl mb-6">Recent Posts</h2>
-                    <PostListItem />
-                    <PostListItem />
-                    <PostListItem />
+                <aside className="container py-10 lg:w-1/4">
+                    <h2 className="text-xl mb-4">Recent Posts</h2>
+                    <div className="space-y-1">
+                        {recentPosts.map(post => (
+                            <PostListItem key={post.id} post={post} />
+                        ))}
+                    </div>
                 </aside>
             </section>
-
+            <ContactUs />
         </div>
     )
 }
