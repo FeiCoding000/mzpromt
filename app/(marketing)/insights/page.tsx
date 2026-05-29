@@ -1,77 +1,68 @@
-"use client";
 import HeroComponent from "@/app/components/main/HeroComponent";
-import CatergoryFilter from "@/app/components/posts/CatergoryFilter";
 import FeaturedPost from "@/app/components/posts/FeaturedPost";
 import PostCard from "@/app/components/posts/PostCard";
 import PostListItem from "@/app/components/posts/PostListItem";
 import type { Post } from "@/db/schema";
-import { useState } from "react";
+import { categoryEnum } from "@/db/schema";
+import { headers } from "next/headers";
+import Link from "next/link";
 
-export default function Page() {
-        const mockedPosts: Post[] = [
-        {
-            id: 1,
-            title: "ATO New Tax Measures: Essential Updates for Australian Small Businesses",
-            slug: "post-1",
-            excerpt: "This is a brief excerpt of the first post.",
-            category: "Tax",
-            status: "published",
-            isFeatured: true,
-            content: "Content of the first post. More details about the first post go here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            coverImageUrl: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-            publishedAt: new Date(),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-        {
-            id: 2,
-            title: "Understanding the New Accounting Standards for Small Businesses",
-            slug: "post-2",
-            category: "Accounting",
-            status: "published",
-            isFeatured: false,
-            excerpt: "This is a brief excerpt of the second post.",
-            content: "Content of the second post. More details about the second post go here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            coverImageUrl: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-            publishedAt: new Date(),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-        {
-            id: 3,
-            title: "Top 5 Financial Tips for Small Business Owners in 2024",
-            slug: "post-3",
-            excerpt: "This is a brief excerpt of the third post.",
-            category: "Business",
-            status: "published",
-            isFeatured: false,
-            content: "Content of the third post. More details about the third post go here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            coverImageUrl: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-            publishedAt: new Date(),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-    ];
-    const [filteredPosts, setFilteredPosts] = useState<Post[]>(mockedPosts);
-    const [selectedCategory, setSelectedCategory] = useState<string>("All");
+type SerializedPost = Omit<Post, "publishedAt" | "createdAt" | "updatedAt"> & {
+    publishedAt: string | null;
+    createdAt: string;
+    updatedAt: string;
+};
+
+async function getInsightsPosts(category?: string): Promise<Post[]> {
+    const headersList = await headers();
+    const host = headersList.get("host");
+
+    if (!host) {
+        throw new Error("Missing request host.");
+    }
+
+    const protocol = headersList.get("x-forwarded-proto") ?? "http";
+    const url = new URL("/api/insights", `${protocol}://${host}`);
+
+    if (category) {
+        url.searchParams.set("category", category);
+    }
+
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch insights posts.");
+    }
+
+    const posts = await response.json() as SerializedPost[];
+
+    return posts.map(post => ({
+        ...post,
+        publishedAt: post.publishedAt ? new Date(post.publishedAt) : null,
+        createdAt: new Date(post.createdAt),
+        updatedAt: new Date(post.updatedAt),
+    }));
+}
+
+export default async function Page( { searchParams }: { searchParams: Promise<{ category?: string }> }) {
+    const categories = categoryEnum.enumValues;
+    const queryCategory = (await searchParams).category;
+    const links = categories.map(category => ({
+        name: category,
+        href: `/insights?category=${category}`,
+    }));
+
+
+    const posts = await getInsightsPosts(queryCategory);
+    
     const insightsProps = {
         title: "Insights",
         description: "Stay updated with the latest news and insights from our team.",
         backgroundImageUrl: "insights.jpg"
     };
 
-    const categories = Array.from(new Set(mockedPosts.map(post => post.category)));
-    const featuredPost = mockedPosts.find(post => post.isFeatured);
 
-    const onCategorySelect = (category: string) => {
-        console.log("Selected category:", category);
-        setSelectedCategory(category);
-        if (category === "All") {
-            setFilteredPosts(mockedPosts);
-        } else {
-            setFilteredPosts(mockedPosts.filter(post => post.category === category));
-        }
-    };
+    const featuredPost = posts.find(post => post.isFeatured);
 
     return (
         <div>
@@ -79,14 +70,27 @@ export default function Page() {
             <section className="container py-10 flex flex-col bg-emerald-50 lg:flex-row gap-10">
 
                 <main className="py-10 lg:w-3/4">
-                    <div>
-                    <CatergoryFilter categories={categories} onCategorySelect={onCategorySelect} />
+
+                    <div className="mb-10 flex items-center gap-6"> 
+                        <Link href={"/insights"} className="text-sm font-medium ">
+                            All
+                        </Link>
+                        {links.map(link => (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className={"text-sm font-medium "}
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
+
                     </div>
 
-                    {featuredPost &&  selectedCategory === "All" && <div className="my-10 w-full"><FeaturedPost post={featuredPost} /> </div>}
+                    {featuredPost && <div className="my-10 w-full"><FeaturedPost post={featuredPost} /> </div>}
 
                     <div className="my-10 grid gap-6 md:grid-cols-2">
-                    {filteredPosts.map(post => (
+                    {posts.map(post => (
                         post.isFeatured ? null : <PostCard key={post.id} post={post} />
                     ))}
                     </div>

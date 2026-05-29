@@ -5,9 +5,9 @@ export async function getPublishedPosts() {
     return await getAllPublishedPosts();
 }
 
-export async function getPostsByCategory(category: PostCategory) {
-    if (!categoryEnum.enumValues.includes(category)) {
+export async function getPostsByCategory(category: string) {
+    if (!categoryEnum.enumValues.includes(category as PostCategory)) {
         throw new Error("Invalid category.");
     }
-    return await getPostByCategory(category);
+    return await getPostByCategory(category as PostCategory);
 }
