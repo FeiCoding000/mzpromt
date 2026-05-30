@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CheckCircle2, Clock, FileCheck2, ShieldCheck } from "lucide-react";
 
 import HeroComponent from "@/app/components/main/HeroComponent";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ContactUs from "@/app/components/contact/ContactUs";
 
