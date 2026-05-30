@@ -5,44 +5,15 @@ import PostCard from "@/app/components/posts/PostCard";
 import PostListItem from "@/app/components/posts/PostListItem";
 import type { Post } from "@/db/schema";
 import { categoryEnum } from "@/db/schema";
-import { headers } from "next/headers";
+import { getPostsByCategory, getPublishedPosts } from "@/lib/services/postService";
 import Link from "next/link";
 
-type SerializedPost = Omit<Post, "publishedAt" | "createdAt" | "updatedAt"> & {
-    publishedAt: string | null;
-    createdAt: string;
-    updatedAt: string;
-};
-
 async function getInsightsPosts(category?: string): Promise<Post[]> {
-    const headersList = await headers();
-    const host = headersList.get("host");
-
-    if (!host) {
-        throw new Error("Missing request host.");
+    if (category && categoryEnum.enumValues.includes(category as typeof categoryEnum.enumValues[number])) {
+        return getPostsByCategory(category);
     }
 
-    const protocol = headersList.get("x-forwarded-proto") ?? "http";
-    const url = new URL("/api/insights", `${protocol}://${host}`);
-
-    if (category) {
-        url.searchParams.set("category", category);
-    }
-
-    const response = await fetch(url, { cache: "no-store" });
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch insights posts.");
-    }
-
-    const posts = await response.json() as SerializedPost[];
-
-    return posts.map(post => ({
-        ...post,
-        publishedAt: post.publishedAt ? new Date(post.publishedAt) : null,
-        createdAt: new Date(post.createdAt),
-        updatedAt: new Date(post.updatedAt),
-    }));
+    return getPublishedPosts();
 }
 
 export default async function Page( { searchParams }: { searchParams: Promise<{ category?: string }> }) {
