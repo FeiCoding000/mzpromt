@@ -16,7 +16,7 @@ export default async function Home() {
         <Services services={services} />
       </section>
       <section className="my-10">
-        <p className="mx-auto max-w-2xl text-center text-lg text-gray-700">
+        <p className="mx-auto max-w-2xl text-center text-lg text-gray-700 container">
           Start and manage your business with confidence Explore practical
           insights on company setup, tax planning, bookkeeping, and compliance —
           designed to help business owners make informed decisions from day one.
