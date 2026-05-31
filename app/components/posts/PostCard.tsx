@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Image from "next/image"
+import Link  from "next/link";
 
 export default function PostCard({ post }: { post: Post }) {
   return (
@@ -32,7 +33,11 @@ export default function PostCard({ post }: { post: Post }) {
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button className="w-full">Read More</Button>
+        <Button className="w-full" variant="default" size="lg">
+          <Link className="mr-2 w-full" href="/insights">
+          Read More
+          </Link>
+        </Button>
       </CardFooter>
     </Card>
   );
