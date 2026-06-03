@@ -34,7 +34,7 @@ export default function PostCard({ post }: { post: Post }) {
       </CardHeader>
       <CardFooter>
         <Button className="w-full" variant="default" size="lg">
-          <Link className="mr-2 w-full" href="/insights">
+          <Link className="mr-2 w-full" href={`/insights/${post.slug}`}>
           Read More
           </Link>
         </Button>

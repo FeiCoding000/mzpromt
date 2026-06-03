@@ -1,4 +1,4 @@
-import { getAllPublishedPosts, getPostByCategory, getPostBySlug, PostCategory } from "@/lib/queries/posts";
+import { getAllPublishedPosts, getPostByCategory, getPostBySlug, getRecentPublishedPosts, PostCategory } from "@/lib/queries/posts";
 import { categoryEnum } from "@/db/schema";
 
 export async function getPublishedPosts() {
@@ -18,4 +18,8 @@ export async function getPostBySlugService(slug: string) {
         throw new Error("Post not found.");
     }
     return post;
+}
+
+export async function getRecentPosts(limit = 3) {
+    return await getRecentPublishedPosts(limit);
 }
