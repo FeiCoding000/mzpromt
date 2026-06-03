@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import {
   Sheet,
@@ -26,6 +29,8 @@ const navLinks = [
 const mobileLinkClass = "rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100";
 
 export default function Hamburger() {
+  const [openServiceGroup, setOpenServiceGroup] = useState<string | null>(null);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -75,7 +80,13 @@ export default function Hamburger() {
               </SheetClose>
 
               {services.map((group) => (
-                <Collapsible key={group.href}>
+                <Collapsible
+                  key={group.href}
+                  open={openServiceGroup === group.href}
+                  onOpenChange={(open) =>
+                    setOpenServiceGroup(open ? group.href : null)
+                  }
+                >
                   <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-gray-100 hover:text-foreground">
                     {group.title}
                     <ChevronDown className="size-4 transition-transform group-data-[state=open]:rotate-180" />
