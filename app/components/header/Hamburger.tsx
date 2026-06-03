@@ -14,18 +14,13 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronDown, Menu } from "lucide-react";
+import { services } from "@/lib/constants/navigation";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/insights", label: "Insights" },
   { href: "/contact", label: "Contact" },
-];
-
-const serviceLinks = [
-  { href: "/services/business", label: "Business Services" },
-  { href: "/services/entity", label: "Entity Setup Services" },
-  { href: "/services/tax", label: "Individual Tax Services" },
 ];
 
 const mobileLinkClass = "rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100";
@@ -70,15 +65,34 @@ export default function Hamburger() {
               <ChevronDown className="size-4 transition-transform group-data-[state=open]:rotate-180" />
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-1 flex flex-col gap-1 pl-4">
-              {serviceLinks.map((link) => (
-                <SheetClose asChild key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-gray-100 hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/services"
+                  className="rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100"
+                >
+                  View all Services
+                </Link>
+              </SheetClose>
+
+              {services.map((group) => (
+                <Collapsible key={group.href}>
+                  <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-gray-100 hover:text-foreground">
+                    {group.title}
+                    <ChevronDown className="size-4 transition-transform group-data-[state=open]:rotate-180" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-1 flex flex-col gap-1 pl-4">
+                    {group.items.map((item) => (
+                      <SheetClose asChild key={item.href}>
+                        <Link
+                          href={item.href}
+                          className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-gray-100 hover:text-foreground"
+                        >
+                          {item.title}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
               ))}
             </CollapsibleContent>
           </Collapsible>
