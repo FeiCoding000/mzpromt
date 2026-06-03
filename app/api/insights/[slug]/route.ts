@@ -8,8 +8,9 @@ export async function GET(
     const { slug } = await params;
 
     const post = await getPostBySlugService(slug);
+
     if (!post) {
         return NextResponse.json({ ok: false, error: "Post not found" }, { status: 404 });
     }
-    return NextResponse.json(post);
+    return NextResponse.json({ ok: true, data: post });
 }
