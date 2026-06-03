@@ -1,4 +1,4 @@
-import { getAllPublishedPosts, getPostByCategory, PostCategory } from "@/lib/queries/posts";
+import { getAllPublishedPosts, getPostByCategory, getPostBySlug, PostCategory } from "@/lib/queries/posts";
 import { categoryEnum } from "@/db/schema";
 
 export async function getPublishedPosts() {
@@ -10,4 +10,12 @@ export async function getPostsByCategory(category: string) {
         throw new Error("Invalid category.");
     }
     return await getPostByCategory(category as PostCategory);
+}
+
+export async function getPostBySlugService(slug: string) {
+    const post = await getPostBySlug(slug);
+    if (!post) {
+        throw new Error("Post not found.");
+    }
+    return post;
 }

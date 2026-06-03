@@ -14,3 +14,7 @@ export async function getPostByCategory(category: PostCategory) {
     return post;
 }
 
+export async function getPostBySlug(slug: string) {
+    const post = await db.select().from(posts).where(and(eq(posts.status, "published"), eq(posts.slug, slug))).limit(1);
+    return post[0] || null;
+}
