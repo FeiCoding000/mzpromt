@@ -1,9 +1,13 @@
-import { getPostBySlugService } from "@/lib/services/postService";
+import { getPostBySlugService, getPublishedPosts } from "@/lib/services/postService";
 import ArticleHeader from "@/app/components/posts/ArticleHeader";
 import MarkdownContent from "@/app/components/posts/MarkdownContent";
-import ContactUs from "@/app/components/contact/ContactUs";
 import Link from "next/dist/client/link";
 import { ChevronLeft } from "lucide-react";
+
+export async function generateStaticParams() {
+    const posts = await getPublishedPosts();
+    return posts.map(post => ({ slug: post.slug }));
+}
 
 export default async function Page({
   params,
