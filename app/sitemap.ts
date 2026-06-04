@@ -1,3 +1,4 @@
+import { serviceDetails } from "@/lib/constants/service-details";
 import type { MetadataRoute } from "next";
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://accounts.managementzone.com.au").replace(/\/$/, "");
@@ -19,8 +20,13 @@ const routes: Array<{
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
+  const serviceRoutes = serviceDetails.map((service) => ({
+    path: service.href,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
-  return routes.map((route) => ({
+  return [...routes, ...serviceRoutes].map((route) => ({
     url: `${siteUrl}${route.path}`,
     lastModified,
     changeFrequency: route.changeFrequency,
